@@ -1,4 +1,4 @@
-# todoey_flutter2
+# todo_list_flutter
 
 A new Flutter project.
 
