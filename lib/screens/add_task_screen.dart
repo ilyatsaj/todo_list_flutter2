@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter2/themes.dart';
+import '../models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
+  // final Function addTaskCallback;
+  // AddTaskScreen(this.addTaskCallback);
+
   @override
   Widget build(BuildContext context) {
+    late String newTaskTitle;
     return Container(
-      color: Color(0xff757575),
+      color: kDarkenedScreenColor,
       child: Container(
         padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 30),
         decoration: BoxDecoration(
@@ -17,11 +24,8 @@ class AddTaskScreen extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Add',
-              style: TextStyle(
-                color: Colors.lightBlueAccent,
-                fontSize: 30.0,
-              ),
+              'Add task',
+              style: kAddTasksHeader,
             ),
             Padding(
               padding: EdgeInsets.only(top: 20),
@@ -32,16 +36,15 @@ class AddTaskScreen extends StatelessWidget {
                       borderSide:
                           BorderSide(color: Colors.lightBlueAccent, width: 5.0),
                     ),
-                    // focusedBorder: UnderlineInputBorder(
-                    //   borderSide:
-                    //       BorderSide(color: Colors.lightBlueAccent, width: 5.0),
-                    // ),
                     hintText: 'Enter short description'),
+                onChanged: (newValue) {
+                  newTaskTitle = newValue;
+                },
               ),
             ),
             Container(
               width: 700.0,
-              padding: EdgeInsets.only(top: 40.0),
+              padding: EdgeInsets.only(top: 40.0, bottom: 50.0),
               child: ElevatedButton(
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -51,10 +54,15 @@ class AddTaskScreen extends StatelessWidget {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.lightBlueAccent),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  //if (newTaskTitle != null)
+                  Provider.of<TaskData>(context, listen: false)
+                      .addTask(newTaskTitle);
+                  Navigator.pop(context);
+                },
                 child: Text(
-                  'Add task',
-                  style: TextStyle(color: Colors.white),
+                  'Add',
+                  style: kGeneralStyle,
                 ),
               ),
             )

@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter2/entities/task.dart';
-import 'package:todoey_flutter2/entities/task_list.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter2/screens/add_task_screen.dart';
+import 'package:todoey_flutter2/themes.dart';
+import 'package:todoey_flutter2/widgets/task_list.dart';
 
-class TasksScreen extends StatelessWidget {
-  Task task1 = new Task(text: 'Buy bread', isChecked: false);
-  List<Task> tasks = [];
+import '../models/task_data.dart';
 
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +20,19 @@ class TasksScreen extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet(
-              context: context, builder: (context) => AddTaskScreen());
+            context: context,
+            // builder: (context) => AddTaskScreen((newTaskTitle) {
+            //   print(newTaskTitle);
+            // }),
+            isScrollControlled: true,
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: AddTaskScreen(),
+              ),
+            ),
+          );
         },
         backgroundColor: Colors.lightBlueAccent,
       ),
@@ -36,15 +53,12 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Todoey',
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  'TodoList',
+                  style: kMainLabel,
                 ),
                 Text(
-                  '12 tasks',
-                  style: TextStyle(color: Colors.white),
+                  '${Provider.of<TaskData>(context).tasks.length} tasks',
+                  style: kGeneralStyle,
                 ),
               ],
             ),
