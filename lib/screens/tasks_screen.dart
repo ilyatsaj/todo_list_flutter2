@@ -57,7 +57,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   style: kMainLabel,
                 ),
                 Text(
-                  '${Provider.of<TaskData>(context).tasks.length} tasks',
+                  '${Provider.of<TaskData>(context).taskLength} tasks',
                   style: kGeneralStyle,
                 ),
               ],
